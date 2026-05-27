@@ -5,12 +5,18 @@ This document covers two ways to connect to the DIS MCP server remotely using th
 - **[Part 1: VS Code / GitHub Copilot](#part-1-vs-code--github-copilot)** — configure via `mcp.json`
 - **[Part 2: Microsoft Copilot Studio](#part-2-microsoft-copilot-studio)** — create a custom agent
 - **[Part 3: Claude Desktop & Claude.ai](#part-3-claude-desktop--claudeai)** — create a custom connector
+- **[Part 4: Databricks](#part-4-databricks)** — create a Unity Catalog connection
 
-The **DIS MCP API Gateway URL**:
+The **DIS MCP API Gateway URLs** by region:
 
-```
-https://api.cloud.precisely.com/dis-mcp/mcp
-```
+| Region | URL |
+|--------|-----|
+| `us-east-1` | `https://api.cloud.precisely.com/mcp` |
+| `eu-west-1` | `https://api.eu1.cloud.precisely.com/mcp` |
+| `eu-west-2` | `https://api.gb1.cloud.precisely.com/mcp` |
+| `ap-southeast-2` | `https://api.au1.cloud.precisely.com/mcp` |
+
+Throughout this guide, `<MCP_SERVER_HOST>` refers to the Host for your region from the table above. `<MCP_SERVER_URL>` refers to the DIS MCP API Gateway URL:  `<MCP_SERVER_HOST>/dis-mcp/mcp`.
 
 ---
 
@@ -41,7 +47,7 @@ Once you have an `Apikey`, edit your `mcp.json` file and add the following entry
   "servers": {
     "dis-mcp": {
       "type": "http",
-      "url": "https://api.cloud.precisely.com/dis-mcp/mcp",
+      "url": "<MCP_SERVER_URL>",
       "headers": {
         "Authorization": "Apikey base64(api_key:api_secret)"
       }
@@ -99,7 +105,7 @@ Provide the following details in the wizard:
 |---|---|
 | **Server name** | `Precisely DIS MCP` |
 | **Description** | `Precisely DIS MCP server — search, describe, and execute data intelligence actions` |
-| **Server URL** | `https://api.cloud.precisely.com/dis-mcp/mcp` |
+| **Server URL** | `<MCP_SERVER_URL>` |
 
 **Authentication** — select **API Key**:
 
@@ -160,10 +166,7 @@ Custom connectors are configured through your Claude account and shared across a
 
 1. Navigate to [Customize > Connectors](https://claude.ai/customize/connectors).
 2. Click **+** then **Add custom connector**.
-3. Enter the name `Precisely DIS MCP` and the Remote MCP server URL:
-   ```
-   https://api.cloud.precisely.com/dis-mcp/mcp
-   ```
+3. Enter the name `Precisely DIS MCP` and the Remote MCP server URL `<MCP_SERVER_URL>`
 4. Click **Advanced settings** and enter:
 
    | Field | Value |
@@ -177,6 +180,8 @@ Custom connectors are configured through your Claude account and shared across a
 > **Team and Enterprise:** Only an Owner can add a custom connector for the org (steps 1–5 above). Members skip straight to step 6 — navigate to [Customize > Connectors](https://claude.ai/customize/connectors), find **Precisely DIS MCP** (marked **Custom**), and click **Connect**.
 
 > **Note:** This method authenticates via SSO and can only connect to your **default DIS workspace**. If you need to target a specific non-default workspace, use Option 2 with credentials from that workspace instead.
+
+> **Regional limitation:** This method only works for the `us-east-1` region (`https://api.cloud.precisely.com/mcp`). For all other regions (`eu-west-1`, `eu-west-2`, `ap-southeast-2`), use [Option 2](#option-2--configure-via-mcp-remote-claude-desktop-only) instead.
 
 
 ### Option 2 — Configure via `mcp-remote` (Claude Desktop only)
@@ -202,7 +207,7 @@ Use this approach for service accounts or to connect to a non-default DIS worksp
     "Precisely DIS MCP": {
       "command": "cmd",
       "args": ["/c", "npx", "-y", "mcp-remote",
-        "https://api.cloud.precisely.com/dis-mcp/mcp",
+        "<MCP_SERVER_URL>",
         "--header", "Authorization: Apikey base64(api_key:api_secret)"]
     }
   }
@@ -217,7 +222,7 @@ Use this approach for service accounts or to connect to a non-default DIS worksp
     "Precisely DIS MCP": {
       "command": "npx",
       "args": ["-y", "mcp-remote",
-        "https://api.cloud.precisely.com/dis-mcp/mcp",
+        "<MCP_SERVER_URL>",
         "--header", "Authorization: Apikey base64(api_key:api_secret)"]
     }
   }
@@ -231,6 +236,60 @@ Use this approach for service accounts or to connect to a non-default DIS worksp
 Once connected, enable the connector per conversation via the **+** button → **Connectors** → toggle **Precisely DIS MCP** on.
 
 Follow [Validating Connectivity via Chat](#validating-connectivity-via-chat) below.
+
+---
+
+## Part 4: Databricks
+
+Databricks supports external MCP servers as Unity Catalog connections. Once registered, the DIS MCP tools appear in AI Playground and can be used directly in AI Agents.
+
+### Requirements
+
+| Requirement | Detail |
+|-------------|--------|
+| **Databricks plan** | Premium or above (Unity Catalog and AI Playground are not available on the Standard plan) |
+| **Unity Catalog** | Enabled on the workspace |
+| **Databricks Runtime** | 15.0 or later (required for HTTP connection type) |
+| **Permission** | `CREATE CONNECTION` privilege on the Unity Catalog metastore, or workspace admin |
+
+### Step 1: Create the Unity Catalog Connection
+
+1. Go to **Catalog**, Click **+** then **Create a connection**.
+2. Set **Connection name** to `precisely_dis_mcp`, **Connection type** to `HTTP`, **Auth type** to `OAuth Machine to Machine`. Click **Next**
+3. Fill in and Click **Next**:
+
+   | Field | Value |
+   |-------|-------|
+   | **Host** | `<MCP_SERVER_HOST>` |
+   | **Port** | Keep defaults  |
+   | **Client ID** | `api_key` created above - see [Create an API Key](#create-an-api-key) |
+   | **Client secret** | `api_secret` created above - see [Create an API Key](#create-an-api-key) |
+   | **Token endpoint** | `https://api.cloud.precisely.com/auth/v2/token` |
+   | **OAuth Scope** | `default` |
+
+4. Set **Token endpoint** to `https://api.cloud.precisely.com/auth/v2/token`, Check **Is mcp connection**, Set **Base path** to `/dis-mcp/mcp`
+5. Click **Create connection**
+
+### Step 2: Create a AI Agent
+
+To deploy a persistent agent that uses DIS MCP tools, create a AI Agent backed by the `precisely_dis_mcp` connection.
+
+**Via the Databricks UI:**
+
+1. In the left navigation, go to **ML/AI → Agents**
+2. Click **Create Agent**
+3. Select **Supervisor Agent**
+4. Under **Tools and sub-agents**, click **Add an External MCP** and select **precisely_dis_mcp**
+5. Set **Instructions**, for example:
+   > You help users enrich and validate data using Precisely DIS. Use `precisely_actions_search` to discover relevant actions, `precisely_actions_describe` to understand their inputs, and `precisely_actions_execute` to run them.
+6. Click **Open in Playground**
+
+### Step 3: Test the Agent in AI Playground
+
+Follow
+[Validating Connectivity via Chat](#validating-connectivity-via-chat).
+Try the [Example Queries](#example-queries) below — the agent will automatically select and call the
+appropriate DIS MCP tool based on what you ask.
 
 ---
 
