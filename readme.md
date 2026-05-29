@@ -19,6 +19,7 @@
 | `precisely-geotax-sdk`         | GeoTAX SDK                  |   ~5    | stdio |                                                                                                                                          | [README](core-geotax-sdk/README.md) | 🔵 Beta |
 | `precisely-dis-mcp`            | Data Integrity Suite (DIS)  |    3    | HTTP  | hosted only                                                                                                                              | [README](data-integrity-suite/README.md) | 🔵 Beta |
 | `precisely-mapinfo-pro`        | MapInfo Pro                 |  ~100   | HTTP/SSE | [mapinfo-pro-mcp-beta.v1.0](https://github.com/PreciselyData/precisely-mcp-servers/releases/tag/mapinfo-pro-mcp-beta.v1.0)           | [README](core-mapinfo-pro/README.md) | 🔵 Beta |
+| `precisely-connect-appmod`     | Connect ETL/AppMod          |    1    |   stdio  | [di-appmod-mcp.beta.v1.0](https://github.com/PreciselyData/precisely-mcp-servers/releases/tag/di-appmod-mcp.beta.v1.0)             | [README](core-connect-appmod/README.md) | 🔵 Beta |
 
 **Status key:**
 - ✅ **Active** — fully implemented, tested, and production-ready in this repo
@@ -68,6 +69,7 @@ precisely-mcp-servers/
 ├── core-geotax-sdk/                 ← 🔵 Beta: GeoTAX SDK
 ├── core-mapinfo-pro/                ← 🔵 Beta: MapInfo Pro (~90 tools, HTTP/SSE)
 └── data-integrity-suite/            ← 🔵 Beta: Data Integrity Suite (DIS) — hosted MCP
+├── core-connect-appmod/             ← 🔵 Beta: Connect ETL/AppMod
 ```
 
 ---
