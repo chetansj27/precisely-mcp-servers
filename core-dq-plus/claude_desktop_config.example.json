@@ -1,14 +1,15 @@
 {
   "mcpServers": {
-    "precisely-dqplus": {
-      "command": "python",
-      "args": ["-m", "mcp_servers"],
-      "cwd": "C:\\path\\to\\dq-plus-mcp",
-      "env": {
-        "DQPLUS_API_ENDPOINT": "https://your-dqplus-instance/graphql",
-        "DQPLUS_API_KEY": "your_api_key"
-      }
+    "dqplus-mcp-remote": {
+      "command": "npx.cmd",
+      "args": [
+        "-y",
+        "mcp-remote@latest",
+        "https://{{dqplus-server-url}}/mcp/{{tenantId}}",
+        "--static-oauth-client-info",
+        "{\"client_id\":\"{{clientId}}\", \"scope\":\"{{scope}}\"}",
+        "--debug"
+      ]
     }
   }
 }
-
