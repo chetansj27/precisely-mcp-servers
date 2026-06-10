@@ -9,14 +9,14 @@ This document covers two ways to connect to the DIS MCP server remotely using th
 
 The **DIS MCP API Gateway URLs** by region:
 
-| Region | URL |
+| Region | Host |
 |--------|-----|
-| `us-east-1` | `https://api.cloud.precisely.com/mcp` |
-| `eu-west-1` | `https://api.eu1.cloud.precisely.com/mcp` |
-| `eu-west-2` | `https://api.gb1.cloud.precisely.com/mcp` |
-| `ap-southeast-2` | `https://api.au1.cloud.precisely.com/mcp` |
+| `us-east-1` | `https://api.cloud.precisely.com` |
+| `eu-west-1` | `https://api.eu1.cloud.precisely.com` |
+| `eu-west-2` | `https://api.gb1.cloud.precisely.com` |
+| `ap-southeast-2` | `https://api.au1.cloud.precisely.com` |
 
-Throughout this guide, `<MCP_SERVER_HOST>` refers to the Host for your region from the table above. `<MCP_SERVER_URL>` refers to the DIS MCP API Gateway URL:  `<MCP_SERVER_HOST>/dis-mcp/mcp`.
+Throughout this guide, `<MCP_SERVER_HOST>` refers to the Host for your region from the table above. `<MCP_SERVER_URL>` refers to the DIS MCP API Gateway URL: `<MCP_SERVER_HOST>/mcp`.
 
 ---
 
@@ -267,7 +267,7 @@ Databricks supports external MCP servers as Unity Catalog connections. Once regi
    | **Token endpoint** | `https://api.cloud.precisely.com/auth/v2/token` |
    | **OAuth Scope** | `default` |
 
-4. Set **Token endpoint** to `https://api.cloud.precisely.com/auth/v2/token`, Check **Is mcp connection**, Set **Base path** to `/dis-mcp/mcp`
+4. Set **Token endpoint** to `https://api.cloud.precisely.com/auth/v2/token`, Check **Is mcp connection**, Set **Base path** to `/mcp`
 5. Click **Create connection**
 
 ### Step 2: Create a AI Agent
