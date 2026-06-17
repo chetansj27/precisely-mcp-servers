@@ -1,4 +1,4 @@
-"""Demographics GraphQL API methods (8 tools)."""
+"""Demographics GraphQL API methods."""
 
 import json
 import logging

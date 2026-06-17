@@ -1,4 +1,4 @@
-"""OGC Features, WMS, and WMTS API methods (8 tools)."""
+"""OGC Features, WMS, and WMTS API methods."""
 
 import base64
 import json
