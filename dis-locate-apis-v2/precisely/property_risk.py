@@ -1,4 +1,4 @@
-"""Property risk GraphQL API methods (9 tools)."""
+"""Property risk GraphQL API methods."""
 
 import json
 import logging

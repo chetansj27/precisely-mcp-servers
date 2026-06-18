@@ -1,6 +1,6 @@
 """
 Tax & Emergency Tools Module
-Contains 5 tools for tax jurisdiction lookups and emergency (911/PSAP) services
+Contains 2 tools for tax jurisdiction lookups and emergency (911/PSAP) services
 """
 from mcp.types import Tool
 from mcp_servers.tools.base_tool import handle_tool_call  # noqa: F401

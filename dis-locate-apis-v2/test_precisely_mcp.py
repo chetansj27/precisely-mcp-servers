@@ -2,7 +2,7 @@
 Unified Test Suite for Precisely MCP Server
 Combines 3-tier testing: Layer 1 (API Core) → Layer 2 (MCP Server) → Layer 3 (Functional)
 
-Tests all 68 Precisely API tools with comprehensive validation and detailed logging
+Tests all 51 Precisely tools with comprehensive validation and detailed logging
 """
 
 import os
@@ -96,7 +96,7 @@ class PreciselyMCPTestSuite:
         """
         Layer 1: Test the foundation - can we call Precisely APIs?
         - Initialize API
-        - Verify all 49 methods exist
+        - Verify all API methods exist
         - Run sample tests to validate API responses
         """
         self.log_header("LAYER 1: API CORE TESTING")
@@ -125,7 +125,7 @@ class PreciselyMCPTestSuite:
         if len(methods) != 56:
             logger.warning(f"  [WARN] Expected 56 methods, found {len(methods)}")
         else:
-            logger.info("  [PASS] All 56 API methods present")
+            logger.info(f"  [PASS] All {len(methods)} API methods present")
         
         # Test 3: Quick smoke tests
         logger.info("\n[3/3] Running Quick Smoke Tests...")
@@ -159,7 +159,7 @@ class PreciselyMCPTestSuite:
         """
         Layer 2: Test the wrapper - are all tools exposed via MCP?
         - Load tool definitions from registry
-        - Verify 68 tool definitions
+        - Verify 51 tool definitions
         - Cross-reference MCP tools with API methods
         """
         self.log_header("LAYER 2: MCP SERVER TESTING")
@@ -335,7 +335,7 @@ class PreciselyMCPTestSuite:
     def test_layer3_functional(self) -> bool:
         """
         Layer 3: Comprehensive functional testing
-        - Test all 49 tools with real API calls
+        - Test all tools with real API calls
         - Validate responses
         - Log every query, payload, and response
         """

@@ -1,4 +1,4 @@
-"""Advanced GraphQL API methods (5 tools — LLM constructs queries directly)."""
+"""Advanced GraphQL API methods (LLM constructs queries directly)."""
 
 import json
 import logging

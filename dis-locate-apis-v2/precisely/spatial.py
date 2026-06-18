@@ -1,4 +1,4 @@
-"""Spatial analysis API methods (7 tools)."""
+"""Spatial analysis API methods."""
 
 import json
 import logging

@@ -1,13 +1,13 @@
 # Precisely MCP Server
 
-A Model Context Protocol (MCP) server that exposes 57 Precisely location intelligence APIs to AI assistants like Claude Desktop, VS Code, Cursor, LangChain, LlamaIndex, and custom applications.
+A Model Context Protocol (MCP) server that exposes 51 Precisely location intelligence tools to AI assistants like Claude Desktop, VS Code, Cursor, LangChain, LlamaIndex, and custom applications.
 
 ## Features
 
-- **68 Production-Ready API Tools**: Complete location intelligence suite
+- **51 Production-Ready Tools**: Complete location intelligence suite
 - **Dual Transport Support**: stdio (default) and Streamable HTTP transports
 - **MCP Protocol**: Standard interface for AI assistants  
-- **100% Test Coverage**: Comprehensive unified test suite with 72/72 tests passing
+- **100% Test Coverage**: Comprehensive unified test suite with 69/69 tests passing
 - **Enhanced Documentation**: GraphQL tools with complete query examples
 - **Clean Architecture**: Zero duplicate code, optimized implementation
 - **Detailed Logging**: Full request/response logging for debugging
@@ -300,7 +300,7 @@ Test Architecture:
 
 1. **Layer 1 - API Core**: Validates initialization and core functionality
 2. **Layer 2 - MCP Server**: Verifies all 51 tools are properly defined
-3. **Layer 3 - Functional**: Tests all 72 test cases with real API calls
+3. **Layer 3 - Functional**: Tests all 69 test cases with real API calls
 
 Test Features:
 
@@ -315,10 +315,10 @@ Sample Output:
 ```
 Layer 1 (API Core):      [PASS]
 Layer 2 (MCP Server):    [PASS]
-Layer 3 (Functional):    [PASS] 72/72 tests
+Layer 3 (Functional):    [PASS] 69/69 tests
 
-Total:     72
-Passed:    72
+Total:     69
+Passed:    69
 Failed:    0
 Pass Rate: 100.0%
 ```
@@ -360,72 +360,66 @@ Pass Rate: 100.0%
 22. get_psyte_geodemographics_by_address - Lifestyle segmentation
 23. get_ground_view_by_address - Census block-level demographics
 
-### Tax & Jurisdiction (6 tools)
+### Tax & Emergency (2 tools)
 
-24. lookup_by_address - Tax jurisdiction by address
-25. lookup_by_location - Tax jurisdiction by coordinates
-26. lookup_by_addresses - Batch tax jurisdiction lookup (addresses)
-27. lookup_by_locations - Batch tax jurisdiction lookup (coordinates)
-28. find_emergency_services - Emergency services (911/PSAP) and Authority Having Jurisdiction lookup by address, coordinates, or FCC ID
-29. geo_locate_ip_address - Geolocation by IP address
+24. lookup_tax_jurisdiction - Tax jurisdiction lookup by address or coordinates (single or batch)
+25. find_emergency_services - Emergency services (911/PSAP) and Authority Having Jurisdiction lookup by address, coordinates, or FCC ID
 
-### Validation & Verification (2 tools)
+### Geolocation (2 tools)
 
-30. verify_emails - Email address verification (single or batch, max 10)
-31. parse_name - Name parsing into components
+26. geo_locate_ip_address - Geolocation by IP address
+27. geo_locate_wifi_access_point - WiFi access point geolocation
 
-### Phone Services (1 tool)
+### Validation & Verification (3 tools)
 
-32. validate_phones - Phone number validation (single or batch, max 10)
-
-### Geolocation (1 tool)
-
-33. geo_locate_wifi_access_point - WiFi access point geolocation
+28. verify_emails - Email address verification (single or batch, max 10)
+29. parse_name - Name parsing into components
+30. validate_phones - Phone number validation (single or batch, max 10)
 
 ### Timezone (1 tool)
 
-34. get_timezones - Get timezone for addresses or coordinates
+31. get_timezones - Get timezone for addresses or coordinates
 
 ### GraphQL Advanced Queries (5 tools)
 
-35. get_addresses_detailed - Comprehensive address details via GraphQL
-36. get_parcel_by_owner_detailed - Parcel ownership queries via GraphQL
-37. get_address_family - Related addresses via GraphQL
-38. get_serviceability - Broadband/utility serviceability via GraphQL
-39. get_places_by_address - Places/points of interest by address via GraphQL
+32. get_addresses_detailed - Comprehensive address details via GraphQL
+33. get_parcel_by_owner_detailed - Parcel ownership queries via GraphQL
+34. get_address_family - Related addresses via GraphQL
+35. get_serviceability - Broadband/utility serviceability via GraphQL
+36. get_places_by_address - Places/points of interest by address via GraphQL
 
 ### Spatial Analysis (7 tools)
 
-40. find_nearest_candidates - Find nearest spatial features by distance
-41. search_at_location - Search for features at/near a location
-42. overlap - Identify spatial overlaps between geometries
-43. get_spatial_products - Get available spatial data product metadata
-44. list_spatial_tables - List available spatial tables
-45. get_table_metadata - Get metadata for a specific spatial table
-46. summarize - Aggregate spatial data within a defined area
+37. find_nearest_candidates - Find nearest spatial features by distance
+38. search_at_location - Search for features at/near a location
+39. overlap - Identify spatial overlaps between geometries
+40. get_spatial_products - Get available spatial data product metadata
+41. list_spatial_tables - List available spatial tables
+42. get_table_metadata - Get metadata for a specific spatial table
+43. summarize - Aggregate spatial data within a defined area
 
 ### OGC API Features (6 tools)
 
-47. ogc_functions - Available spatial functions
-48. ogc_collections - List feature collections
-49. ogc_collection - Information about a specific collection
-50. ogc_collection_schema - Schema for a collection
-51. ogc_collection_queryables - Queryable attributes for a collection
-52. ogc_collection_items - Data records from a collection, or a single feature by ID
+44. ogc_functions - Available spatial functions
+45. ogc_collections - List feature collections
+46. ogc_collection - Information about a specific collection
+47. ogc_collection_schema - Schema for a collection
+48. ogc_collection_queryables - Queryable attributes for a collection
+49. ogc_collection_items - Data records from a collection, or a single feature by ID
 
-### WMS - Web Map Service (1 tool, 3 tests)
+### WMS - Web Map Service (1 tool)
 
-53. wms_request - WMS handler (GetCapabilities/GetMap/GetFeatureInfo via GET; GetMap with SLD styling via POST) — tested with GetCapabilities, GetFeatureInfo, and POST GetMap (3 tests)
+50. wms_request - WMS handler (GetCapabilities/GetMap/GetFeatureInfo via GET; GetMap with SLD styling via POST)
 
-### WMTS - Web Map Tile Service (1 tool, 3 tests)
+### WMTS - Web Map Tile Service (1 tool)
 
-54. wmts_request - WMTS handler (GetCapabilities/GetTile KVP/GetTile simple profile)
+51. wmts_request - WMTS handler (GetCapabilities/GetTile KVP/GetTile simple profile)
 
 ## Project Structure
 
 ```
- precisely_api_core.py              # Core API implementation (2,500+ lines, 72 methods)
- test_precisely_mcp.py              # Unified 3-tier test suite (680+ lines, 72 tests)
+ precisely_api_core.py              # Core API implementation (2,500+ lines)
+ test_precisely_mcp.py              # Unified 3-tier test suite (680+ lines, 69 tests)
  requirements.txt                   # Python dependencies (core + HTTP transport)
  .env.template                      # Credential configuration template
  readme.md                          # This file
@@ -454,7 +448,7 @@ Pass Rate: 100.0%
 
 ### Architecture Changes
 
-- 59 API methods, 51 MCP tools, 72 functional test cases
+- 51 tools, 69 functional test cases
 - File size reductions: precisely_api_core.py 8% smaller
 - Removed redundant files
 
@@ -515,7 +509,7 @@ Solution: pip install -r requirements.txt --upgrade
 
 ### Issue: Tool not found errors
 
-Solution: Verify tool count matches 68
+Solution: Verify tool count matches 51
 
 ### Issue: Test failures
 
@@ -523,11 +517,10 @@ Solution:
 1. Check API credentials are valid
 2. Verify internet connectivity
 3. Review test logs in test_logs/
-4. Ensure all 72 methods exist in precisely_api_core.py
 
 ## Production-Ready Checklist
 
-- 100% test coverage (72/72 tests passing)
+- 100% test coverage (69/69 tests passing)
 - Dual transport support (stdio + HTTP)
 - Comprehensive error handling
 - Detailed logging (application + tests)
@@ -542,6 +535,6 @@ Solution:
 
 **Version**: 9.1 Production  
 **Last Updated**: March 30, 2026  
-**Tool Count**: 68 APIs  
+**Tool Count**: 51  
 **Transports**: stdio (default), Streamable HTTP  
-**Test Coverage**: 100% (72/72 passing)
+**Test Coverage**: 100% (69/69 passing)

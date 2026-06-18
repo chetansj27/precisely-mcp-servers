@@ -5,7 +5,7 @@ Used as `outputSchema` on Tool definitions per MCP spec 2025-11-25.
 """
 
 # ============================================================
-# Geocoding & Address (9 tools)
+# Geocoding & Address (6 tools)
 # ============================================================
 
 # geocode, reverse_geocode, verify_address
@@ -169,7 +169,7 @@ GEO_LOCATE_WIFI_RESPONSE = {
 }
 
 # ============================================================
-# Verification (5 tools)
+# Verification (3 tools)
 # ============================================================
 
 # verify_emails (consolidated: single + batch)
@@ -290,7 +290,7 @@ TIMEZONE_RESPONSE = {
 }
 
 # ============================================================
-# Tax & Emergency (6 tools)
+# Tax & Emergency (2 tools)
 # ============================================================
 
 # lookup_tax_jurisdiction (single returns response, batch returns responses)
@@ -602,7 +602,6 @@ TABLE_METADATA_RESPONSE = {
                 "type": "object",
                 "properties": {
                     "columnName": {"type": "string"},
-                    "description": {"type": "string"},
                     "dataType": {"type": "string", "description": "Data type (e.g., 'STRING', 'INTEGER', 'LONG_INTEGER', 'FEATURE_GEOMETRY')."},
                     "queryable": {"type": "boolean", "description": "Whether filters can be applied on this column."}
                 }
@@ -721,7 +720,7 @@ OGC_FEATURE_COLLECTION = {
 }
 
 # ============================================================
-# WMS (2 tools)
+# WMS (1 tool)
 # ============================================================
 
 _IMAGE_RESULT = {
